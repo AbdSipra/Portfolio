@@ -1,0 +1,8 @@
+torch
+numpy
+scipy
+grpcio
+grpcio-tools
+gradio
+protobuf
+matplotlib

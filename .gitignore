@@ -1,0 +1,38 @@
+# Python
+_pycache_/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.env
+
+# Bark Models
+bark/*
+# (Optional: allow very specific files later if needed)
+
+# Audio Outputs
+*.wav
+*.mp3
+outputs/
+
+# Jupyter Checkpoints
+.ipynb_checkpoints/
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.log
+*.tmp
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Docker Artifacts
+*.tar
+*.sock
+
+# Huggingface Cache (if you pull models)
+~/.cache/

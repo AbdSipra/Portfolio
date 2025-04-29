@@ -1,5 +1,6 @@
 #THIS FILE WILL RUN THE gRPC SERVER
 
+<<<<<<< HEAD
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -44,3 +45,6 @@ def serve():
 if __name__ == "__main__":
     serve()
         
+
+
+>>>>>>> 541976ddbcaa355a46739796716fec08fed05f09

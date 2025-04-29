@@ -1,0 +1,14 @@
+syntax = "proto3";
+package storyaudio;
+
+message AudioRequest{
+    string story_text = 1;
+}
+
+message AudioResponse{
+    bytes audio_data = 1;
+}
+
+service StoryAudioService{
+    rpc GenerateAudio (AudioRequest) returns (AudioResponse);
+}

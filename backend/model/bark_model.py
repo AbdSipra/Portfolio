@@ -4,7 +4,7 @@ import torch
 import numpy as np
 import os
 from bark import generate_audio, preload_models
-
+#this comment tells that the code pushed was done while in LRC with saad and ansari
 
 # === PATCH for Bark Compatibility with PyTorch 2.1+ ===
 import torch.serialization

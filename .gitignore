@@ -9,7 +9,7 @@ venv/
 *.env
 
 # Bark Models
-bark/*
+
 # (Optional: allow very specific files later if needed)
 
 # Audio Outputs

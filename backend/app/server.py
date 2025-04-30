@@ -1,50 +1,34 @@
-#THIS FILE WILL RUN THE gRPC SERVER
-
-<<<<<<< HEAD
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-
 import grpc
 from concurrent import futures
-from protos import audio_pb2_grpc
-from protos import audio_pb2
 
+# Add backend path so we can import model and protos
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-
-# jb bark model ready hojai ga tou idher to wo import krna hai
-from model import bark_model
+from protos import audio_pb2, audio_pb2_grpc
+from model.bark_model import Story2AudioModel
 
 class StoryAudioService(audio_pb2_grpc.StoryAudioServiceServicer):
     def __init__(self):
-        #bark model initialisation
-        #self.model = Story2AudioModel()
-        pass 
+        self.model = Story2AudioModel()
 
     def GenerateAudio(self, request, context):
         story_text = request.story_text
-        print(f"Recieved story text {story_text}")
+        print(f"[gRPC] Received story: {story_text}")
 
-        #for now jb tk model nae hai return this fake audio for testing 
-        fake_audio = b"This is a fake audio for testing purposes"
+        # Generate audio as bytes
+        audio_bytes = self.model.generate_audio_from_text(story_text)
 
-        #audio_bytes = self.model.generate_audio(story_text)
+        return audio_pb2.AudioResponse(audio_data=audio_bytes)
 
-        return audio_pb2.AudioResponse(audio_data=fake_audio)
-    
-#Serve the generated audio 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     audio_pb2_grpc.add_StoryAudioServiceServicer_to_server(StoryAudioService(), server)
-    server.add_insecure_port('[::]:50051')  # Listen on all available IPs, port 50051
+    server.add_insecure_port('[::]:50051')
     server.start()
-    print("✅ gRPC server started. Listening on port 50051...")
+    print("✅ gRPC Server running on port 50051...")
     server.wait_for_termination()
 
 if __name__ == "__main__":
     serve()
-        
-
-
->>>>>>> 541976ddbcaa355a46739796716fec08fed05f09

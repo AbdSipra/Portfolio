@@ -1,18 +1,19 @@
 import sys
 import os
 import grpc
-import io
 from concurrent import futures
+import io
+import soundfile as sf
 
 # Add backend path so we can import model and protos
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from protos import audio_pb2, audio_pb2_grpc
 from model.tts_model import Story2AudioModel
-import soundfile as sf
 
 class StoryAudioService(audio_pb2_grpc.StoryAudioServiceServicer):
     def __init__(self):
+        # Load the ParlerTTS model
         self.model = Story2AudioModel()
 
     def GenerateAudio(self, request, context):
@@ -22,7 +23,7 @@ class StoryAudioService(audio_pb2_grpc.StoryAudioServiceServicer):
         # Generate audio numpy array and sample rate
         audio_np, sample_rate = self.model.generate_audio_from_text(story_text)
 
-        # Write numpy array to WAV format in memory
+        # Convert numpy array to WAV bytes using PCM_16 (browser compatible)
         buffer = io.BytesIO()
         sf.write(buffer, audio_np, sample_rate, format='WAV', subtype='PCM_16')
         audio_bytes = buffer.getvalue()
@@ -34,7 +35,7 @@ def serve():
     audio_pb2_grpc.add_StoryAudioServiceServicer_to_server(StoryAudioService(), server)
     server.add_insecure_port('[::]:50051')
     server.start()
-    print("✅ gRPC Server running on port 50051...")
+    print("✅ ParlerTTS gRPC Server running on port 50051...")
     server.wait_for_termination()
 
 if __name__ == "__main__":

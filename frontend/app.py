@@ -2,6 +2,12 @@ import gradio as gr
 import grpc
 import sys
 import os
+import io
+import soundfile as sf
+import numpy as np
+import tempfile
+import threading
+import time
 
 # Add backend path to import protos
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'backend')))
@@ -11,6 +17,17 @@ from protos import audio_pb2, audio_pb2_grpc
 # Setup gRPC client
 channel = grpc.insecure_channel("localhost:50051")
 stub = audio_pb2_grpc.StoryAudioServiceStub(channel)
+
+# Function to delete file after some time
+def delete_file_later(filepath, delay=30):
+    def delete():
+        time.sleep(delay)
+        try:
+            os.remove(filepath)
+            print(f"✅ Deleted temporary file: {filepath}")
+        except Exception as e:
+            print(f"⚠️ Error deleting file {filepath}: {e}")
+    threading.Thread(target=delete, daemon=True).start()
 
 def generate_audio_gradio(story_text):
     if not story_text.strip():
@@ -23,12 +40,21 @@ def generate_audio_gradio(story_text):
         # Send request and get response
         response = stub.GenerateAudio(request)
 
-        # Save audio bytes to a temporary file
-        output_path = "frontend_output.wav"
-        with open(output_path, "wb") as f:
-            f.write(response.audio_data)
+        # Read audio bytes into numpy
+        buffer = io.BytesIO(response.audio_data)
+        audio_np, sr = sf.read(buffer, dtype="float32")
 
-        return output_path  # Gradio will play this file
+        # Save to temporary file (browser compatible format)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmpfile:
+            sf.write(tmpfile.name, audio_np, sr, subtype='PCM_16')
+            filepath = tmpfile.name
+
+        # Schedule for deletion
+        delete_file_later(filepath)
+
+        # Return for frontend
+        return filepath
+
     except Exception as e:
         print(f"Error: {e}")
         return None
@@ -37,9 +63,9 @@ def generate_audio_gradio(story_text):
 iface = gr.Interface(
     fn=generate_audio_gradio,
     inputs=gr.Textbox(lines=8, placeholder="Enter your story here...", label="Story Text"),
-    outputs=gr.Audio(type="numpy", label="Generated Audio"),
+    outputs=gr.Audio(type="filepath", label="Generated Audio"),
     title="Story2Audio Generator",
-    description="Paste a story below and generate lifelike audio using Bark TTS via gRPC backend.",
+    description="Generate expressive audio using YourTTS + gRPC + Gradio.",
     allow_flagging="never"
 )
 

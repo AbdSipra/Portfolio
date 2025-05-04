@@ -25,7 +25,7 @@ class Story2AudioModel:
         self.sampling_rate = self.model.config.sampling_rate
         print("✅ ParlerTTS model loaded.")
 
-    def generate_audio_from_text(self, text, description="Read with a warm and natural storytelling tone."):
+    def generate_audio_from_text(self, text, description="Read in an excited manner , emphasizing the pauses"):
 
         # Break text into sentences
         sentences = sent_tokenize(text)

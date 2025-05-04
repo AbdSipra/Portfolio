@@ -1,32 +1,28 @@
-import os
+import torch
+from parler_tts import ParlerTTSForConditionalGeneration
+from transformers import AutoTokenizer
 import numpy as np
-import soundfile as sf
-import tempfile
-from TTS.api import TTS
 
 class Story2AudioModel:
     def __init__(self):
-        print("Loading Jenny TTS model...")
-        self.tts = TTS(model_name="tts_models/en/jenny/jenny", progress_bar=True, gpu=False)
+        print("Loading Parler Jenny model...")
+        self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        self.model = ParlerTTSForConditionalGeneration.from_pretrained("parler-tts/parler-tts-mini-jenny-30H").to(self.device)
+        self.tokenizer = AutoTokenizer.from_pretrained("parler-tts/parler-tts-mini-jenny-30H")
+        print("✅ Parler Jenny model loaded.")
 
-        # Jenny is a single speaker model, so no speaker wav or speaker id is required
-        print("✅ Jenny model loaded successfully.")
+        # Use a fixed style description (can be improved later)
+        self.default_style = "Speaks at an average pace with clear and animated tone."
 
-    def generate_audio_from_text(self, text):
-        # Create a temporary file to save the audio
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmpfile:
-            output_path = tmpfile.name
+    def generate_audio_from_text(self, prompt_text):
+        # Prepare style and prompt
+        input_ids = self.tokenizer(self.default_style, return_tensors="pt").input_ids.to(self.device)
+        prompt_input_ids = self.tokenizer(prompt_text, return_tensors="pt").input_ids.to(self.device)
 
-        # Generate and save audio
-        self.tts.tts_to_file(
-            text=text,
-            file_path=output_path
-        )
+        # Generate audio
+        generation = self.model.generate(input_ids=input_ids, prompt_input_ids=prompt_input_ids)
 
-        # Read audio as numpy array
-        audio_np, sr = sf.read(output_path, dtype="float32")
+        # Convert to numpy
+        audio_np = generation.cpu().numpy().squeeze()
 
-        # Delete the temporary file after reading
-        os.remove(output_path)
-
-        return audio_np, sr
+        return audio_np, self.model.config.sampling_rate

@@ -1,38 +1,45 @@
-# Python
-_pycache_/
+# Python caches and artifacts
+__pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 .Python
+
+# Virtual environments
 env/
 venv/
 *.env
 
-# Bark Models
-
-# (Optional: allow very specific files later if needed)
-
-# Audio Outputs
+# Audio test/output files
 *.wav
 *.mp3
 outputs/
 
-# Jupyter Checkpoints
+# Jupyter notebook checkpoints
 .ipynb_checkpoints/
 
-# IDE and Editor Files
+# IDE and editor files
 .vscode/
 .idea/
 *.log
 *.tmp
 
-# OS Files
+# OS generated files
 .DS_Store
 Thumbs.db
 
-# Docker Artifacts
+# Docker artifacts
 *.tar
 *.sock
 
-# Huggingface Cache (if you pull models)
+# Huggingface / transformers cache
 ~/.cache/
+transformers_cache/
+huggingface/
+
+# Generated protobuf files (optional, depends if you generate them or keep static)
+*.pb2.py
+
+# Test artifacts
+test_output.*
+tests/output/

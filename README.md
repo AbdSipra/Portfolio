@@ -2,7 +2,7 @@
 **Story2Audio Microservice Documentation**
 
 ---
-
+<img src='C:\Users\abdul\story2audio\story2audio\architecture.png'>
 **Table of Contents**
 
 1. Overview

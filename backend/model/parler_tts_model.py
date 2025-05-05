@@ -5,9 +5,11 @@ import torch
 import tempfile
 from transformers import AutoTokenizer
 from parler_tts import ParlerTTSForConditionalGeneration
-import nltk
-nltk.download('punkt')
-from nltk.tokenize import sent_tokenize
+import re
+
+def simple_sentence_tokenize(text):
+    # Simple splitter to avoid nltk errors
+    return re.split(r'(?<=[.!?]) +', text)
 
 class Story2AudioModel:
     def __init__(self):
@@ -27,12 +29,15 @@ class Story2AudioModel:
 
     def generate_audio_from_text(self, text, description="Read in an excited manner , emphasizing the pauses"):
 
-        # Break text into sentences
-        sentences = sent_tokenize(text)
+        # ✅ USE CUSTOM SPLITTER, NOT nltk
+        sentences = simple_sentence_tokenize(text)
 
         audio_segments = []
 
         for sentence in sentences:
+            if not sentence.strip():
+                continue
+
             print(f"🔊 Generating audio for sentence: {sentence}")
 
             input_ids = self.tokenizer(description, return_tensors="pt").input_ids.to(self.device)
@@ -41,24 +46,19 @@ class Story2AudioModel:
             generation = self.model.generate(
                 input_ids=input_ids,
                 prompt_input_ids=prompt_input_ids,
-                max_new_tokens=4000  # allows more output
+                max_new_tokens=4000
             )
 
             audio_arr = generation.cpu().numpy().squeeze()
             audio_segments.append(audio_arr)
 
-        # Concatenate all audio segments
         final_audio = np.concatenate(audio_segments)
 
-        # Save to a temporary file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmpfile:
             sf.write(tmpfile.name, final_audio, self.sampling_rate, subtype='PCM_16')
             filepath = tmpfile.name
 
-        # Load audio back as numpy
         audio_np, sr = sf.read(filepath, dtype="float32")
-
-        # Delete temp file after loading
         os.remove(filepath)
 
         return audio_np, sr

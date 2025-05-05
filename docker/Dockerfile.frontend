@@ -1,0 +1,15 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY frontend ./frontend
+COPY backend/protos ./frontend/protos
+
+RUN pip install --no-cache-dir gradio requests grpcio soundfile numpy protobuf
+
+# Add frontend to PYTHONPATH
+ENV PYTHONPATH=/app/frontend
+
+EXPOSE 7860
+
+CMD ["python", "frontend/app.py"]

@@ -1,0 +1,55 @@
+Accuracy: 5.51%
+
+Class-wise Precision, Recall, F1 Score:
+Class 0: Precision=0.000, Recall=0.000, F1=0.000
+Class 1: Precision=0.000, Recall=0.000, F1=0.000
+Class 2: Precision=0.000, Recall=0.000, F1=0.000
+Class 3: Precision=0.000, Recall=0.000, F1=0.000
+Class 4: Precision=0.000, Recall=0.000, F1=0.000
+Class 5: Precision=0.000, Recall=0.000, F1=0.000
+Class 6: Precision=0.000, Recall=0.000, F1=0.000
+Class 7: Precision=0.000, Recall=0.000, F1=0.000
+Class 8: Precision=0.000, Recall=0.000, F1=0.000
+Class 9: Precision=0.000, Recall=0.000, F1=0.000
+Class 10: Precision=0.000, Recall=0.000, F1=0.000
+Class 11: Precision=0.000, Recall=0.000, F1=0.000
+Class 12: Precision=0.000, Recall=0.000, F1=0.000
+Class 13: Precision=0.055, Recall=1.000, F1=0.104
+Class 14: Precision=0.000, Recall=0.000, F1=0.000
+Class 15: Precision=0.000, Recall=0.000, F1=0.000
+Class 16: Precision=0.000, Recall=0.000, F1=0.000
+Class 17: Precision=0.000, Recall=0.000, F1=0.000
+Class 18: Precision=0.000, Recall=0.000, F1=0.000
+Class 19: Precision=0.000, Recall=0.000, F1=0.000
+Class 20: Precision=0.000, Recall=0.000, F1=0.000
+Class 21: Precision=0.000, Recall=0.000, F1=0.000
+Class 22: Precision=0.000, Recall=0.000, F1=0.000
+Class 23: Precision=0.000, Recall=0.000, F1=0.000
+Class 24: Precision=0.000, Recall=0.000, F1=0.000
+Class 25: Precision=0.000, Recall=0.000, F1=0.000
+Class 26: Precision=0.000, Recall=0.000, F1=0.000
+Class 27: Precision=0.000, Recall=0.000, F1=0.000
+Class 28: Precision=0.000, Recall=0.000, F1=0.000
+Class 29: Precision=0.000, Recall=0.000, F1=0.000
+Class 30: Precision=0.000, Recall=0.000, F1=0.000
+Class 31: Precision=0.000, Recall=0.000, F1=0.000
+Class 32: Precision=0.000, Recall=0.000, F1=0.000
+Class 33: Precision=0.000, Recall=0.000, F1=0.000
+Class 34: Precision=0.000, Recall=0.000, F1=0.000
+Class 35: Precision=0.000, Recall=0.000, F1=0.000
+Class 36: Precision=0.000, Recall=0.000, F1=0.000
+Class 37: Precision=0.000, Recall=0.000, F1=0.000
+Class 38: Precision=0.000, Recall=0.000, F1=0.000
+Class 39: Precision=0.000, Recall=0.000, F1=0.000
+Class 40: Precision=0.000, Recall=0.000, F1=0.000
+Class 41: Precision=0.000, Recall=0.000, F1=0.000
+Class 42: Precision=0.000, Recall=0.000, F1=0.000
+
+Confusion Matrix:
+[[0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ ...
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]]

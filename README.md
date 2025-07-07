@@ -48,9 +48,14 @@ A functional website with an interactive dashboard and a proper SQL + Node.js ba
 
 ---
 
+### ✈️ FlightDelay_Pred
+A machine learning project to predict flight delays using flight schedules, weather data, and airline metadata. It covers data cleaning, EDA, feature engineering, and uses models like Random Forest and XGBoost to classify delays. Ideal for practical predictive modeling.
+
+➡️ [View Project](./FlightDelay_Pred)
+
 ---
 
 ## 📧 Contact
 
 Made by **Abdullah Sipra**  
-Feel free to explore the folders. For inquiries: `abdullahsipra2003@gmail.com`  
+Feel free to explore the folders. For inquiries: `abdullahsipra2003@gmail.com`

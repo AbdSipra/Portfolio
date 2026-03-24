@@ -2,7 +2,7 @@
 
 This repository is the main entry point to my work.
 
-Instead of placing every project in one large repo, each project now lives in its own standalone repository. That keeps the codebase cleaner, makes each project easier to review, and presents my GitHub in a more organized and professional way.
+
 
 ## Featured Repositories
 

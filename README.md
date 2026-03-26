@@ -16,6 +16,13 @@ This repository is the main entry point to my work.
 - [EmojiGuard](https://github.com/AbdSipra/EmojiGuard)
 - [Rodla-Based-CV-System](https://github.com/AbdSipra/Rodla-Based-CV-System)
 
+## Collaborative Repositories
+
+These projects are also part of my work and portfolio, but they are currently hosted under collaborator accounts.
+
+- [MOMT-FYP](https://github.com/saadK3/MOMT-FYP)
+- [mlopsproject](https://github.com/M-ibby04/mlopsproject)
+
 ## Portfolio Website
 
 - Live site: https://portfolio-website-bice-omega.vercel.app
